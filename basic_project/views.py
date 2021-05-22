@@ -55,3 +55,17 @@ def getMessageIndexV4(request, name, age):
             "status": "success",
             "message": "{text_subject} : Feliz dia {text_name} por cumpir {text_age} {text_age2}".format(text_name=name, text_age=age, text_subject=request.GET["subject"], text_age2= ("años", "año")[age == 1] )
         }, indent=4), content_type="application/json", status=200)
+
+def createUserAdminDefault(request):
+    from django.contrib.auth.models import User
+    userName = "super-admin"
+    if len(User.objects.filter(username=userName)) > 0:
+        return HttpResponse(json.dumps({
+            "status": "success",
+            "message": "Ya esta creado el usuario por defecto"
+        }, indent=4), content_type="application/json", status=200)    
+    User.objects.create_user(username=userName, password="admin4334")
+    return HttpResponse(json.dumps({
+            "status": "success",
+            "message": "Se creo el usuario por defecto"
+        }, indent=4), content_type="application/json", status=200)
