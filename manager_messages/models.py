@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User as UserBase
 
 # Create your models here.
 class Message(models.Model):
@@ -9,11 +10,14 @@ class Message(models.Model):
     def __str__(self):
         return self.author_name
 
-
-class User(models.Model):
-    """User model"""
-    email = models.EmailField(max_length=255, unique=True)
-    password = models.CharField(max_length=255)
+class Role(models.Model):
+    name = models.CharField(max_length=100)
+    
+class Profile(models.Model):
+    """Profile model"""
+    #user_id
+    user = models.OneToOneField(UserBase, on_delete=models.CASCADE)
+    role = models.OneToOneField(Role, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     bibliography = models.TextField(blank=True)
@@ -23,10 +27,6 @@ class User(models.Model):
         Vuelve nullable el campo y el valor del vacio es null
     """
     birthdate = models.DateField(blank=True, null=True)
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-
-class Role(models.Model):
-    name = models.CharField(max_length=100)
+    picture = models.ImageField(upload_to="users/pictures", blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
