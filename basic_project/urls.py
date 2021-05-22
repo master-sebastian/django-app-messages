@@ -19,6 +19,8 @@ from basic_project import views
 
 urlpatterns = [
 #    path('admin/', admin.site.urls),
-    path("v1/message", views.getMessageIndexV1),
-    path("v2/message", views.getMessageIndexV2)
+    path("api/v1/message", views.getMessageIndexV1),
+    path("api/v2/message", views.getMessageIndexV2),
+    path("api/v3/message", views.getMessageIndexV3),
+    path("api/v4/message/<str:name>/<int:age>", views.getMessageIndexV4)
 ]
