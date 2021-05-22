@@ -41,7 +41,7 @@ def listMessagesV1(request):
     return HttpResponse("<br>".join(messages), status=200)
 
 def listMessagesV2(request):
-    return render(request, 'messages/index.html',{
+    return render(request, 'manager_messages/messages/index.html',{
             "listMessages": LIST_MESSAGES
         })
 
