@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
 from basic_project import views as local_views
 from manager_messages import views as manager_messages_views
 
@@ -38,8 +40,10 @@ admin.site.site_header = 'Administrador del proyecto'   # default: "Django Admin
 admin.site.index_title = 'Mi area de trabajo'           # default: "Site administration"
 admin.site.site_title = 'Mi Proyecto'                   # default: "Django site admin"
 
-urlpatterns = urlpatterns +[
+urlpatterns = urlpatterns + [
     path('admin/', admin.site.urls),
     path("v1/message", manager_messages_views.listMessagesV1),
     path("v2/message", manager_messages_views.listMessagesV2),
 ]
+
+urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
