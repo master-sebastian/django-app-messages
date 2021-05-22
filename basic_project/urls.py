@@ -14,13 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 #from django.contrib import admin
-from django.http import HttpResponse
 from django.urls import path
-
-def getMessageIndex(request):
-    return HttpResponse("Este es el index bienvenido sea")
+from basic_project import views
 
 urlpatterns = [
 #    path('admin/', admin.site.urls),
-    path("message", getMessageIndex)
+    path("v1/message", views.getMessageIndexV1),
+    path("v2/message", views.getMessageIndexV2)
 ]
