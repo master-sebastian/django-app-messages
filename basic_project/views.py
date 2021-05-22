@@ -63,8 +63,13 @@ def createUserAdminDefault(request):
         return HttpResponse(json.dumps({
             "status": "success",
             "message": "Ya esta creado el usuario por defecto"
-        }, indent=4), content_type="application/json", status=200)    
-    User.objects.create_user(username=userName, password="admin4334")
+        }, indent=4), content_type="application/json", status=200)   
+    User.objects.create_user(
+        username=userName, 
+        is_superuser=1,
+        password="admin4334",
+        is_staff=1
+    )
     return HttpResponse(json.dumps({
             "status": "success",
             "message": "Se creo el usuario por defecto"
