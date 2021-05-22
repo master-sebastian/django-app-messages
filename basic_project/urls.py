@@ -34,6 +34,10 @@ urlpatterns = urlpatterns + [
 ]
 
 "URL views"
+admin.site.site_header = 'Administrador del proyecto'   # default: "Django Administration"
+admin.site.index_title = 'Mi area de trabajo'           # default: "Site administration"
+admin.site.site_title = 'Mi Proyecto'                   # default: "Django site admin"
+
 urlpatterns = urlpatterns +[
     path('admin/', admin.site.urls),
     path("v1/message", manager_messages_views.listMessagesV1),
