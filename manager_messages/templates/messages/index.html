@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title>Message - Lista de mensajes</title>
+	</head>
+	<body>
+		{% for objMessage in listMessages %}
+			<h1>{{objMessage.author_message}}</h1>
+			<hr>
+			<p>{{objMessage.message}}</p>
+			<br>
+		{% endfor %}
+	</body>
+</html>
