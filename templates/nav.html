@@ -15,7 +15,7 @@
             <a class="nav-link text-white" aria-current="page" href="{% url 'signup' %}">Registrarme</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" aria-current="page" href="{% url 'index' %}">Home</a>
+            <a class="nav-link text-white" aria-current="page" href="{% url 'create_message' %}">Nuevo mensaje</a>
           </li>
           {# Este esun comentario en jinja #}
           {% if not request.user.is_anonymous %}

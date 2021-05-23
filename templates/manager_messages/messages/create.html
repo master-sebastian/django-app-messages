@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block head_content %}
+	Crear nuevo mensage
+{% endblock %}
+
+{% block container %}
+	<div class="row offset-lg-3 col-lg-6 border border-5">
+        <h3 class="text-center bg-primary text-white">
+            <hr>
+                Nuevo message en App Messages ✔
+            <hr>
+        </h3>
+        <div class="padding-config-content">
+            <form method="POST" action="{% url 'create_message' %}">
+                {% csrf_token %}
+                <input type="hidden" name="profile" value="{{profile.pk}}">
+                <div class="mb-3">
+                    <label for="field-message" class="form-label">Mensaje 👇</label>
+                    <textarea class="form-control {% if form.message.errors %} is-invalid {% endif %} " rows="5" id="field-message" name="message" aria-describedby="message" required
+                        placeholder="Mensaje"
+                    >{% if form.message.errors %}{{form.message.value}}{% endif %}</textarea>
+                    {% if form.message.errors %}
+                        <div class="invalid-feedback">
+                            <ul>
+                                {% for error in  form.message.errors %}
+                                    <li>{{error}}</li>
+                                {% endfor %}
+                            <ul>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+	</div>
+{% endblock %}

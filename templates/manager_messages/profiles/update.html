@@ -83,9 +83,7 @@
                     <label for="field-bibliography" class="form-label">Bibliografia 👇</label>
                     <textarea class="form-control {% if form.bibliography.errors %} is-invalid {% endif %} " rows="5" id="field-bibliography" name="bibliography" aria-describedby="bibliography" required
                         placeholder="Bibliografia"
-                    >
-                        {% if form.bibliography.errors %} {{form.bibliography.value}} {% else %} {{profile.bibliography}} {% endif %}
-                    </textarea>
+                    >{% if form.bibliography.errors %}{{form.bibliography.value}}{% else %}{{profile.bibliography}}{% endif %}</textarea>
                     {% if form.bibliography.errors %}
                         <div class="invalid-feedback">
                             <ul>

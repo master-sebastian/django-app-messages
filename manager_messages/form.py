@@ -7,4 +7,4 @@ class MessageForm(forms.ModelForm):
 
     class Meta:
         model = Message
-        fields = ('author_name', "message")
+        fields = ('profile', "message")

@@ -1,6 +1,7 @@
 from basic_project.form import ProfileForm
+from .form import MessageForm
 from django.contrib.auth.decorators import login_required
-from manager_messages.models import Message
+from .models import Message
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.core import serializers
@@ -8,25 +9,18 @@ import json
 
 LIST_MESSAGES = [
     {
-        'author_name': 'Persona 1',
         'message': 'Este es un mensaje de la persona 1'
     },{
-        'author_name': 'Persona 2',
         'message': 'Este es un mensaje de la persona 2'
     },{
-        'author_name': 'Persona 3',
         'message': 'Este es un mensaje de la persona 3'
     },{
-        'author_name': 'Persona 4',
         'message': 'Este es un mensaje de la persona 4'
     },{
-        'author_name': 'Persona 5',
         'message': 'Este es un mensaje de la persona 5'
     },{
-        'author_name': 'Persona 6',
         'message': 'Este es un mensaje de la persona 6'
     },{
-        'author_name': 'Persona 7',
         'message': 'Este es un mensaje de la persona 7'
     }
 ]
@@ -35,18 +29,11 @@ LIST_MESSAGES = [
 def listMessagesV1(request):
     messages = [
         """
-            <h1>{author_name}</h1>
-            <hr>
             <p>"{message}"</p>
         """.format(**item)
         for item in LIST_MESSAGES
     ]
     return HttpResponse("<br>".join(messages), status=200)
-
-def listMessagesV2(request):
-    return render(request, 'manager_messages/messages/index.html',{
-            "listMessages": LIST_MESSAGES
-        })
 
 def runSeederMessages(request):
     ids = []
@@ -90,11 +77,9 @@ def getListMessagesByIdV1(request,id):
         }
     , indent=4), content_type="application/json", status=200)
 
-
+@login_required
 def updateProfile(request):
-    from datetime import date
     profile = request.user.profile
-
     if request.method == "POST":
         form  = ProfileForm(request.POST, request.FILES)
         if(form.is_valid()):
@@ -118,3 +103,24 @@ def updateProfile(request):
                 "profile": profile,
                 "form": form
     })
+
+@login_required
+def createMessage(request):
+    if request.method == "POST":
+        form  = MessageForm(request.POST)
+        if(form.is_valid()):
+            form.save()
+            return redirect("index")
+    else:
+        form = MessageForm()
+    return render(request, "manager_messages/messages/create.html", {
+                "form": form,
+                "profile":request.user.profile
+    })
+
+@login_required
+def listMessagesV2(request):
+    listMessages = Message.objects.all().order_by("-created")#ordenar por mas recientes
+    return render(request, 'manager_messages/messages/index.html',{
+            "listMessages": listMessages
+        })

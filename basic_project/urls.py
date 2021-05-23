@@ -49,6 +49,7 @@ urlpatterns = urlpatterns + [
     path("user/signup/", users_views.signupApp, name="signup"),
     re_path(r"^$", manager_messages_views.listMessagesV2, name="index"),
     path("profile/edit", manager_messages_views.updateProfile, name="update_profile"),
+    path("create/message", manager_messages_views.createMessage, name="create_message"),
 
 ]
 

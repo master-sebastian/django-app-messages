@@ -8,19 +8,27 @@
 	<div class="row">
 		{% for objMessage in listMessages %}
 			<div class="card col-lg-4 mb-6 padding-config-content">
-				<img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="card-img-top" alt="...">
+				{% if objMessage.profile.picture %}
+					<img src="{{ objMessage.profile.picture.url }}" class="rounded col-lg-12" alt="{{ objMessage.profile }}">
+				{% else %}
+					<img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="rounded col-lg-12" alt="{{ objMessage.profile }}">
+				{% endif %}
 				<div class="card-body padding-config-content">
-					<h2 class="card-title text-center">{{objMessage.author_name}}</h2>
+					<h2 class="card-title text-center">{{objMessage.profile}}</h2>
 					<p class="card-text fst-italic text-center">{{objMessage.message}}</p>
-					<hr>	
-					<div class="row">
-						<div class="text-center padding-config-content col-lg-6 mb-6">
-							<a href="#" class="btn btn-info text-white">&#x1f4dd; Modificar</a>
+					<hr>
+					<p class="card-text fst-italic text-center"><b>Publicado el </b>{{objMessage.created}}</p>
+					<!--
+						<hr>	
+						<div class="row">
+							<div class="text-center padding-config-content col-lg-6 mb-6">
+								<a href="#" class="btn btn-info text-white">&#x1f4dd; Modificar</a>
+							</div>
+							<div class="text-center padding-config-content col-lg-6 mb-6">
+								<a href="#" class="btn btn-danger text-white">&#x1f5d1; Eliminar</a>
+							</div>
 						</div>
-						<div class="text-center padding-config-content col-lg-6 mb-6">
-							<a href="#" class="btn btn-danger text-white">&#x1f5d1; Eliminar</a>
-						</div>
-					</div>
+					-->
 				</div>
 			</div>
 		{% endfor %}
