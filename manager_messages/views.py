@@ -1,6 +1,6 @@
+from basic_project.form import ProfileForm
 from django.contrib.auth.decorators import login_required
 from manager_messages.models import Message
-from manager_messages.models import Profile
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.core import serializers
@@ -96,27 +96,25 @@ def updateProfile(request):
     profile = request.user.profile
 
     if request.method == "POST":
-        data = request.POST
-        dateTime = data["birthdate"].split("-")
-        dataFile = request.FILES
-        profile.first_name = data["first_name"]
-        profile.last_name = data["last_name"]
-        profile.bibliography = data["bibliography"]
+        form  = ProfileForm(request.POST, request.FILES)
+        if(form.is_valid()):
+            data = form.cleaned_data
 
-        if(len(dateTime) == 3):
-            if(dateTime[0].isnumeric() and dateTime[1].isnumeric() and dateTime[2].isnumeric()):
-                profile.birthdate = date(int(dateTime[0]), int(dateTime[1]), int(dateTime[2]))
-                
-        if dataFile.get("picture") != None:
-            profile.picture = dataFile["picture"]
-        profile.save()
+            profile.first_name = data["first_name"]
+            profile.last_name = data["last_name"]
+            profile.bibliography = data["bibliography"]
+            profile.birthdate = data["birthdate"]
+            if(data["picture"] != None):
+                profile.picture = data["picture"]
+            profile.save()
 
-        request.user.first_name = profile.first_name
-        request.user.last_name = profile.last_name
-        request.user.save()
-
-        return redirect("update_profile")
-    
+            request.user.first_name = profile.first_name
+            request.user.last_name = profile.last_name
+            request.user.save()
+            return redirect("update_profile")
+    else:
+        form = ProfileForm()
     return render(request, "manager_messages/profiles/update.html", {
-                "profile": profile
+                "profile": profile,
+                "form": form
     })

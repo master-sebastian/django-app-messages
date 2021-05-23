@@ -22,18 +22,16 @@
             <hr>
         </div>
         <div class="padding-config-content">
-            {% if error_message %}
-                <div class="alert alert-danger" role="alert">
-                    ❌💬 {{ error_message }}
-                </div> 
-            {% endif %}
-            {% if success_message %}
-                <div class="alert alert-success" role="alert">
-                    ✔💬 {{ success_message }}
-                </div> 
-            {% endif %}
+
             <form method="POST" action="{% url 'update_profile' %}" enctype="multipart/form-data">
                 {% csrf_token %}
+                {% for field in form %}
+                    {% if field.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            ❌💬 {{ field.label }}: {{ field.errors|striptags}}
+                        </div>
+                    {% endif %}
+                {% endfor %}
                 <div class="mb-3">
                     <label for="field-first-name" class="form-label">Primer nombre 👇</label>
                     <input type="text" class="form-control" id="field-first-name" name="first_name" aria-describedby="first-name" required value="{{profile.first_name}}">
@@ -43,7 +41,7 @@
                     <input type="text" class="form-control" id="field-last-name" name="last_name" aria-describedby="last-name" required value="{{profile.last_name}}">
                 </div>
                 <div class="mb-3">
-                    <label for="field-birthdate" class="form-label">Fecha de cumpleaños 👇</label>
+                    <label for="field-birthdate" class="form-label">Fecha de nacimiento 👇</label>
                     <input type="date" class="form-control" id="field-birthdate" name="birthdate" aria-describedby="birthdate" required value='{{ profile.birthdate|date:"Y-m-d" }}'>
                 </div>
                 <div class="mb-3">
