@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block head_content %}
+	<title>Login de autenticación</title>
+{% endblock %}
+
+{% block container %}
+	<div class="row offset-lg-3 col-lg-6 border border-5">
+        <h3 class="text-center bg-primary text-white">
+            <hr>
+            Registrar en App Messages ✔
+            <hr>
+        </h3>
+        <hr>
+        <div class="padding-config-content">
+            {% if error_message %}
+                <div class="alert alert-danger" role="alert">
+                    ❌💬 {{ error_message }}
+                </div> 
+            {% endif %}
+            <form method="POST" action="{% url 'signup' %}">
+                {% csrf_token %}
+                {% if next %}
+                  <input type="hidden" name="next" value="{{ next }}"/>
+                {% endif %}
+                <div class="mb-3">
+                  <label for="field-first-name" class="form-label">Primer nombre 👇</label>
+                  <input type="text" class="form-control" id="field-first-name" name="first_name" aria-describedby="first-name" required>
+                </div>
+                <div class="mb-3">
+                  <label for="field-last-name" class="form-label">Segundo nombre 👇</label>
+                  <input type="text" class="form-control" id="field-last-name" name="last_name" aria-describedby="last-name" required>
+                </div>
+                <div class="mb-3">
+                  <label for="field-email" class="form-label">Correo electronico 👇✉</label>
+                  <input type="email" class="form-control" id="field-email" name="email" aria-describedby="email" required>
+                </div>
+                <div class="mb-3">
+                  <label for="field-username" class="form-label">Nombre de usuario 👇</label>
+                  <input type="text" class="form-control" id="field-username" name="username" aria-describedby="username" required>
+                  <div class="form-text">Ingrese el nombre del usuario con el que se autenticara</div>
+                </div>
+                <div class="mb-3">
+                  <label for="field-password" class="form-label">Contraseña 👇🔒</label>
+                  <input type="password" class="form-control" id="field-password" name="password" required>
+                </div>
+                <div class="mb-3">
+                  <label for="field-password-confirmation" class="form-label">Confirmacion de la contraseña 👇🔒</label>
+                  <input type="password" class="form-control" id="field-password-confirmation" name="password_confirmation" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Enviar ✉ </button>
+                </div>
+              </form>
+        </div>
+	</div>
+{% endblock %}

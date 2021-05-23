@@ -46,6 +46,7 @@ urlpatterns = urlpatterns + [
     path("v1/message", manager_messages_views.listMessagesV1),
     path("user/login/", users_views.loginApp, name="login"),
     path("user/logout/", users_views.logoutApp, name="logout"),
+    path("user/signup/", users_views.signupApp, name="signup"),
     re_path(r"^$", manager_messages_views.listMessagesV2, name="index"),
 
 ]
