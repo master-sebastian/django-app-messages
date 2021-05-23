@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block head_content %}
+	Modificar perfil
+{% endblock %}
+
+{% block container %}
+	<div class="row offset-lg-3 col-lg-6 border border-5">
+        <h3 class="text-center bg-primary text-white">
+            <hr>
+                Modificar mi perfil en App Messages ✔
+            <hr>
+        </h3>
+        <div class="offset-lg-3 col-6">
+            <div class="text-center">
+                {% if profile.picture %}
+                    <img src="{{ profile.picture.url }}" class="rounded col-lg-12" alt="{{ profile }}">
+                {% else %}
+                    <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="rounded col-lg-12" alt="{{ profile }}">
+                {% endif %}
+            </div>
+            <hr>
+        </div>
+        <div class="padding-config-content">
+            {% if error_message %}
+                <div class="alert alert-danger" role="alert">
+                    ❌💬 {{ error_message }}
+                </div> 
+            {% endif %}
+            {% if success_message %}
+                <div class="alert alert-success" role="alert">
+                    ✔💬 {{ success_message }}
+                </div> 
+            {% endif %}
+            <form method="POST" action="{% url 'update_profile' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="field-first-name" class="form-label">Primer nombre 👇</label>
+                    <input type="text" class="form-control" id="field-first-name" name="first_name" aria-describedby="first-name" required value="{{profile.first_name}}">
+                </div>
+                <div class="mb-3">
+                    <label for="field-last-name" class="form-label">Segundo nombre 👇</label>
+                    <input type="text" class="form-control" id="field-last-name" name="last_name" aria-describedby="last-name" required value="{{profile.last_name}}">
+                </div>
+                <div class="mb-3">
+                    <label for="field-birthdate" class="form-label">Fecha de cumpleaños 👇</label>
+                    <input type="date" class="form-control" id="field-birthdate" name="birthdate" aria-describedby="birthdate" required value='{{ profile.birthdate|date:"Y-m-d" }}'>
+                </div>
+                <div class="mb-3">
+                    <label for="field-bibliography" class="form-label">Bibliografia 👇</label>
+                    <textarea class="form-control" rows="5" id="field-bibliography" name="bibliography" aria-describedby="bibliography" required>{{profile.bibliography}}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="field-picture" class="form-label">Imagen del perfil 👇</label>
+                    <input type="file" class="form-control" id="field-picture" name="picture">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+	</div>
+{% endblock %}

@@ -48,6 +48,7 @@ urlpatterns = urlpatterns + [
     path("user/logout/", users_views.logoutApp, name="logout"),
     path("user/signup/", users_views.signupApp, name="signup"),
     re_path(r"^$", manager_messages_views.listMessagesV2, name="index"),
+    path("profile/edit", manager_messages_views.updateProfile, name="update_profile"),
 
 ]
 
