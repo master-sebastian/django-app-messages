@@ -26,7 +26,7 @@ def loginApp(request):
             login(request, auth)
             if nextPOST != None:
                 return redirect(nextPOST)
-            return redirect("index")
+            return redirect("manager_messages:index")
         else:
             return render(request, baseTemplate, {
                 "error_message": "El usuario o la contraseña son incorrectos"
@@ -40,7 +40,7 @@ def loginApp(request):
 
 def logoutApp(request):
     logout(request)
-    return redirect("login")
+    return redirect("users:login")
 
 def signupApp(request):
     baseTemplate = "users/signup.html"
@@ -49,7 +49,7 @@ def signupApp(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("login")
+            return redirect("users:login")
         return render(request, baseTemplate, context={"form":form})
     elif request.method == "GET":
         return render(request, baseTemplate, context={"form":form})

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-primary text-white">
     <div class="container-fluid">
-      <a class="navbar-brand text-white" href="{% url 'index' %}">App Messages</a>
+      <a class="navbar-brand text-white" href="{% url 'manager_messages:index' %}">App Messages</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -8,14 +8,14 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           {% if request.user.is_anonymous %}
             <li class="nav-item">
-              <a class="nav-link text-white" aria-current="page" href="{% url 'login' %}">Login</a>
+              <a class="nav-link text-white" aria-current="page" href="{% url 'users:login' %}">Login</a>
             </li>
           {% endif %}
           <li class="nav-item">
-            <a class="nav-link text-white" aria-current="page" href="{% url 'signup' %}">Registrarme</a>
+            <a class="nav-link text-white" aria-current="page" href="{% url 'users:signup' %}">Registrarme</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" aria-current="page" href="{% url 'create_message' %}">Nuevo mensaje</a>
+            <a class="nav-link text-white" aria-current="page" href="{% url 'manager_messages:create_message' %}">Nuevo mensaje</a>
           </li>
           {# Este esun comentario en jinja #}
           {% if not request.user.is_anonymous %}
@@ -24,8 +24,8 @@
                 {{ request.user.first_name }}
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{% url 'update_profile' %}">Perfil</a></li>
-                <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar session</a></li>
+                <li><a class="dropdown-item" href="{% url 'manager_messages:update_profile' %}">Perfil</a></li>
+                <li><a class="dropdown-item" href="{% url 'users:logout' %}">Cerrar session</a></li>
               </ul>
             </li>
           {% endif%}

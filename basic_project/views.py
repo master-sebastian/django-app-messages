@@ -1,8 +1,10 @@
+
 #utilities django
 from django.http import HttpResponse
 #utilities python
-import json
 from datetime import datetime as clock
+import json
+
 def getMessageIndexV1(request):
     """return a message"""
     currentDateTime = clock.now().strftime("%b %dth %Y - %H:%M hrs")

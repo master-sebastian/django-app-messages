@@ -12,7 +12,7 @@
             <hr>
         </h3>
         <div class="padding-config-content">
-            <form method="POST" action="{% url 'create_message' %}">
+            <form method="POST" action="{% url 'manager_messages:create_message' %}">
                 {% csrf_token %}
                 <input type="hidden" name="profile" value="{{profile.pk}}">
                 <div class="mb-3">

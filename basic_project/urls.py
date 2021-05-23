@@ -14,43 +14,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from basic_project import views as local_views
-from manager_messages import views as manager_messages_views
-from users import views as users_views
 
-
-urlpatterns = []
-"#URL APis"
-urlpatterns = urlpatterns + [
-    path("api/v1/message", local_views.getMessageIndexV1),
-    path("api/v2/message", local_views.getMessageIndexV2),
-    path("api/v3/message", local_views.getMessageIndexV3),
-    path("api/v4/message/<str:name>/<int:age>", local_views.getMessageIndexV4),
-    path("api/v5/seeder_message", manager_messages_views.runSeederMessages),
-    path("api/v5/list_message", manager_messages_views.getListMessagesV1),
-    path("api/v5/list_message/<int:id>", manager_messages_views.getListMessagesByIdV1),
-    path("api/v6/create_user_default", local_views.createUserAdminDefault)
-    
-]
-
-"URL views"
 admin.site.site_header = 'Administrador del proyecto'   # default: "Django Administration"
 admin.site.index_title = 'Mi area de trabajo'           # default: "Site administration"
 admin.site.site_title = 'Mi Proyecto'                   # default: "Django site admin"
 
-urlpatterns = urlpatterns + [
+urlpatterns = [
+
+    #URLs views and APIs project_basic
+    path("basic-project/", include(( "basic_project.urls_api", "basic_project"), namespace="basic_project")),
+    #Urls Admin
     path('admin/', admin.site.urls),
-    path("v1/message", manager_messages_views.listMessagesV1),
-    path("user/login/", users_views.loginApp, name="login"),
-    path("user/logout/", users_views.logoutApp, name="logout"),
-    path("user/signup/", users_views.signupApp, name="signup"),
-    re_path(r"^$", manager_messages_views.listMessagesV2, name="index"),
-    path("profile/edit", manager_messages_views.updateProfile, name="update_profile"),
-    path("create/message", manager_messages_views.createMessage, name="create_message"),
+    #URLs views and APIs messages
+    path("", include( ("manager_messages.urls", "manager_messages"), namespace="manager_messages")),
+    #URLs views and APIs users
+    path("users/", include( ("users.urls", "users" ), namespace="users")),
 
 ]
 
+#settings for files of the media 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

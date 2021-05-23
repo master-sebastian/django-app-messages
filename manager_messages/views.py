@@ -96,7 +96,7 @@ def updateProfile(request):
             request.user.first_name = profile.first_name
             request.user.last_name = profile.last_name
             request.user.save()
-            return redirect("update_profile")
+            return redirect("manager_messages:update_profile")
     else:
         form = ProfileForm()
     return render(request, "manager_messages/profiles/update.html", {
@@ -110,7 +110,7 @@ def createMessage(request):
         form  = MessageForm(request.POST)
         if(form.is_valid()):
             form.save()
-            return redirect("index")
+            return redirect("manager_messages:index")
     else:
         form = MessageForm()
     return render(request, "manager_messages/messages/create.html", {

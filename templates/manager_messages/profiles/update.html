@@ -23,7 +23,7 @@
         </div>
         <div class="padding-config-content">
 
-            <form method="POST" action="{% url 'update_profile' %}" enctype="multipart/form-data">
+            <form method="POST" action="{% url 'manager_messages:update_profile' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <!--
                     {% for field in form %}
