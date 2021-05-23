@@ -1,9 +1,17 @@
-from django.db.models import base
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
+from django.views.generic import DetailView
 from .form import SignupForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
+
+class UserDetailView(LoginRequiredMixin,DetailView):
+    template_name = "users/detail.html"
+    slug_field = "username"
+    slug_url_kwarg = "slug_username"
+    queryset = User.objects.all()
 
 def loginApp(request):    
 

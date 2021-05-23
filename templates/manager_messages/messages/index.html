@@ -18,11 +18,20 @@
 					<p class="card-text fst-italic text-center">{{objMessage.message}}</p>
 					<hr>
 					<p class="card-text fst-italic text-center"><b>Publicado el </b>{{objMessage.created}}</p>
+					
+					<div class="row">
+						<div class="text-center padding-config-content col-lg-12 mb-12">
+							<a href="{% url 'users:detail' objMessage.profile.user.username %}" class="btn btn-success text-white">&#128373; Ver perfil del publicador</a>
+						</div>
+					</div>
 					<!--
 						<hr>	
 						<div class="row">
 							<div class="text-center padding-config-content col-lg-6 mb-6">
 								<a href="#" class="btn btn-info text-white">&#x1f4dd; Modificar</a>
+							</div>
+							<div class="text-center padding-config-content col-lg-6 mb-6">
+								<a href="#" class="btn btn-danger text-white">&#x1f5d1; Eliminar</a>
 							</div>
 							<div class="text-center padding-config-content col-lg-6 mb-6">
 								<a href="#" class="btn btn-danger text-white">&#x1f5d1; Eliminar</a>

@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    Hola mundo {{ request.user }}
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block head_content %}
+	Detalle del usuario
+{% endblock %}
+{% block container %}
+    <div class="containe text-center">
+        <p class="fw-bold st-italic">Nompre usuario: </p><p class="fst-italic">{{user.username}}</p>
+        <hr>
+        <p class="fw-bold st-italic">Primer nompre: </p><p class="fst-italic">{{user.first_name}}</p>
+        <hr>
+        <p class="fw-bold st-italic">Segundo nompre: </p><p class="fst-italic">{{user.last_name}}</p>
+        <hr>
+    </div>
+{% endblock %}

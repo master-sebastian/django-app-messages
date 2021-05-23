@@ -5,6 +5,7 @@ from .models import Message
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.core import serializers
+from django.urls import reverse
 import json
 
 LIST_MESSAGES = [
@@ -96,7 +97,13 @@ def updateProfile(request):
             request.user.first_name = profile.first_name
             request.user.last_name = profile.last_name
             request.user.save()
-            return redirect("manager_messages:update_profile")
+            return redirect(
+                reverse(
+                    "users:detail",
+                    kwargs={
+                        "slug_username":profile.user.username
+                    }
+                ))
     else:
         form = ProfileForm()
     return render(request, "manager_messages/profiles/update.html", {
