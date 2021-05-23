@@ -25,28 +25,82 @@
                 {% endif %}
                 <div class="mb-3">
                   <label for="field-first-name" class="form-label">Primer nombre 👇</label>
-                  <input type="text" class="form-control" id="field-first-name" name="first_name" aria-describedby="first-name" required>
+                  <input type="text" class="form-control {% if form.first_name.errors %} is-invalid {% endif %}l" id="field-first-name" name="first_name" aria-describedby="first-name" required value="{% if form.first_name.value != None %}{{form.first_name.value}}{% endif %}">
+                  {% if form.first_name.errors %}
+                    <div class="invalid-feedback">
+                        <ul>
+                            {% for error in  form.first_name.errors %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                        <ul>
+                    </div>
+                  {% endif %}
                 </div>
                 <div class="mb-3">
                   <label for="field-last-name" class="form-label">Segundo nombre 👇</label>
-                  <input type="text" class="form-control" id="field-last-name" name="last_name" aria-describedby="last-name" required>
+                  <input type="text" class="form-control {% if form.last_name.errors %} is-invalid {% endif %}" id="field-last-name" name="last_name" aria-describedby="last-name" required value="{% if form.last_name.value != None %}{{form.last_name.value}}{% endif %}">
+                  {% if form.last_name.errors %}
+                    <div class="invalid-feedback">
+                        <ul>
+                            {% for error in  form.last_name.errors %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                        <ul>
+                    </div>
+                  {% endif %}
                 </div>
                 <div class="mb-3">
                   <label for="field-email" class="form-label">Correo electronico 👇✉</label>
-                  <input type="email" class="form-control" id="field-email" name="email" aria-describedby="email" required>
+                  <input type="email" class="form-control {% if form.email.errors %} is-invalid {% endif %}" id="field-email" name="email" aria-describedby="email" required value="{% if form.email.value != None %}{{form.email.value}}{% endif %}">
+                  {% if form.email.errors %}
+                    <div class="invalid-feedback">
+                        <ul>
+                            {% for error in  form.email.errors %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                        <ul>
+                    </div>
+                  {% endif %}
                 </div>
                 <div class="mb-3">
                   <label for="field-username" class="form-label">Nombre de usuario 👇</label>
-                  <input type="text" class="form-control" id="field-username" name="username" aria-describedby="username" required>
+                  <input type="text" class="form-control {% if form.username.errors %} is-invalid {% endif %}" id="field-username" name="username" aria-describedby="username" required value="{% if form.username.value != None %}{{form.username.value}}{% endif %}">
                   <div class="form-text">Ingrese el nombre del usuario con el que se autenticara</div>
+                  {% if form.username.errors %}
+                    <div class="invalid-feedback">
+                        <ul>
+                            {% for error in  form.username.errors %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                        <ul>
+                    </div>
+                  {% endif %}
                 </div>
                 <div class="mb-3">
                   <label for="field-password" class="form-label">Contraseña 👇🔒</label>
-                  <input type="password" class="form-control" id="field-password" name="password" required>
+                  <input type="password" class="form-control {% if form.password.errors %} is-invalid {% endif %}" id="field-password" name="password" required>
+                  {% if form.password.errors %}
+                    <div class="invalid-feedback">
+                        <ul>
+                            {% for error in  form.password.errors %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                        <ul>
+                    </div>
+                  {% endif %}
                 </div>
                 <div class="mb-3">
                   <label for="field-password-confirmation" class="form-label">Confirmacion de la contraseña 👇🔒</label>
-                  <input type="password" class="form-control" id="field-password-confirmation" name="password_confirmation" required>
+                  <input type="password" class="form-control {% if form.password_confirmation.errors %} is-invalid {% endif %}" id="field-password-confirmation" name="password_confirmation" required>
+                  {% if form.password_confirmation.errors %}
+                    <div class="invalid-feedback">
+                        <ul>
+                            {% for error in  form.password_confirmation.errors %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                        <ul>
+                    </div>
+                  {% endif %}
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Enviar ✉ </button>
