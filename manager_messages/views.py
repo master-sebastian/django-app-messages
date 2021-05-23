@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from manager_messages.models import Message
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -28,7 +29,7 @@ LIST_MESSAGES = [
         'message': 'Este es un mensaje de la persona 7'
     }
 ]
-
+@login_required
 def listMessagesV1(request):
     messages = [
         """

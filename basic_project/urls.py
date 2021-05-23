@@ -14,11 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from django.conf.urls.static import static
 from django.conf import settings
 from basic_project import views as local_views
 from manager_messages import views as manager_messages_views
+from users import views as users_views
 
 
 urlpatterns = []
@@ -43,7 +44,10 @@ admin.site.site_title = 'Mi Proyecto'                   # default: "Django site 
 urlpatterns = urlpatterns + [
     path('admin/', admin.site.urls),
     path("v1/message", manager_messages_views.listMessagesV1),
-    path("v2/message", manager_messages_views.listMessagesV2),
+    path("user/login/", users_views.loginApp, name="login"),
+    path("user/logout/", users_views.logoutApp, name="logout"),
+    re_path(r"^$", manager_messages_views.listMessagesV2, name="index"),
+
 ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

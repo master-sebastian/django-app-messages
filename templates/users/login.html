@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block head_content %}
+	<title>Login de autenticación</title>
+{% endblock %}
+
+{% block container %}
+	<div class="row offset-lg-3 col-lg-6 border border-5">
+        <h3 class="text-center bg-primary text-white">
+            <hr>
+            Login de App Messages ✔
+            <hr>
+        </h3>
+        <hr>
+        <div class="padding-config-content">
+            {% if error_message %}
+                <div class="alert alert-danger" role="alert">
+                    ❌💬 {{ error_message }}
+                </div> 
+            {% endif %}
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                {% if next %}
+                  <input type="hidden" name="next" value="{{ next }}"/>
+                {% endif %}
+                <div class="mb-3">
+                  <label for="field-username" class="form-label">Nombre de usuario 👍</label>
+                  <input type="text" class="form-control" id="field-username" name="username" aria-describedby="username">
+                  <div class="form-text">Ingrese el nombre del usuario con el que se autenticara</div>
+                </div>
+                <div class="mb-3">
+                  <label for="field-password" class="form-label">Contraseña 🔒</label>
+                  <input type="password" class="form-control" id="field-password" name="password">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Enviar ✉ </button>
+                </div>
+              </form>
+        </div>
+	</div>
+{% endblock %}
