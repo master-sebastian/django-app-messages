@@ -25,32 +25,89 @@
 
             <form method="POST" action="{% url 'update_profile' %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                {% for field in form %}
-                    {% if field.errors %}
-                        <div class="alert alert-danger" role="alert">
-                            ❌💬 {{ field.label }}: {{ field.errors|striptags}}
-                        </div>
-                    {% endif %}
-                {% endfor %}
+                <!--
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                ❌💬 {{ field.label }}: {{ field.errors|striptags}}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                -->
                 <div class="mb-3">
                     <label for="field-first-name" class="form-label">Primer nombre 👇</label>
-                    <input type="text" class="form-control" id="field-first-name" name="first_name" aria-describedby="first-name" required value="{{profile.first_name}}">
+                    <input type="text" class="form-control {% if form.first_name.errors %} is-invalid {% endif %}" id="field-first-name" name="first_name" aria-describedby="first-name" required
+                        placeholder="Primer nombre" 
+                        value="{% if form.first_name.errors %} {{form.first_name.value}} {% else %} {{profile.first_name}} {% endif %}">
+                    {% if form.first_name.errors %}
+                        <div class="invalid-feedback">
+                            <ul>
+                                {% for error in  form.first_name.errors %}
+                                    <li>{{error}}</li>
+                                {% endfor %}
+                            <ul>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="mb-3">
                     <label for="field-last-name" class="form-label">Segundo nombre 👇</label>
-                    <input type="text" class="form-control" id="field-last-name" name="last_name" aria-describedby="last-name" required value="{{profile.last_name}}">
+                    <input type="text" class="form-control {% if form.last_name.errors %} is-invalid {% endif %}" id="field-last-name" name="last_name" aria-describedby="last-name" required 
+                        placeholder="Segundo nombre" 
+                        value="{% if form.last_name.errors %} {{form.last_name.value}} {% else %} {{profile.last_name}} {% endif %}">
+                    {% if form.last_name.errors %}
+                        <div class="invalid-feedback">
+                            <ul>
+                                {% for error in  form.last_name.errors %}
+                                    <li>{{error}}</li>
+                                {% endfor %}
+                            <ul>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="mb-3">
-                    <label for="field-birthdate" class="form-label">Fecha de nacimiento 👇</label>
-                    <input type="date" class="form-control" id="field-birthdate" name="birthdate" aria-describedby="birthdate" required value='{{ profile.birthdate|date:"Y-m-d" }}'>
+                    <label for="field-birthdate" class="form-label">Fecha de nacimiento 👇 {{profile.birthdate|date:"Y-m-d"}} </label>
+                    <input type="date" class="form-control {% if form.birthdate.errors %} is-invalid {% endif %}" id="field-birthdate" name="birthdate" aria-describedby="birthdate" required  
+                        value='{% if form.birthdate.errors %}{{form.birthdate.value|date:"Y-m-d"}}{% else %}{{profile.birthdate|date:"Y-m-d"}}{% endif %}'
+                    >
+                    {% if form.birthdate.errors %}
+                        <div class="invalid-feedback">
+                            <ul>
+                                {% for error in  form.birthdate.errors %}
+                                    <li>{{error}}</li>
+                                {% endfor %}
+                            <ul>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="mb-3">
                     <label for="field-bibliography" class="form-label">Bibliografia 👇</label>
-                    <textarea class="form-control" rows="5" id="field-bibliography" name="bibliography" aria-describedby="bibliography" required>{{profile.bibliography}}</textarea>
+                    <textarea class="form-control {% if form.bibliography.errors %} is-invalid {% endif %} " rows="5" id="field-bibliography" name="bibliography" aria-describedby="bibliography" required
+                        placeholder="Bibliografia"
+                    >
+                        {% if form.bibliography.errors %} {{form.bibliography.value}} {% else %} {{profile.bibliography}} {% endif %}
+                    </textarea>
+                    {% if form.bibliography.errors %}
+                        <div class="invalid-feedback">
+                            <ul>
+                                {% for error in  form.bibliography.errors %}
+                                    <li>{{error}}</li>
+                                {% endfor %}
+                            <ul>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="mb-3">
                     <label for="field-picture" class="form-label">Imagen del perfil 👇</label>
-                    <input type="file" class="form-control" id="field-picture" name="picture">
+                    <input type="file" class="form-control {% if form.picture.errors %} is-invalid {% endif %}" id="field-picture" name="picture">
+                    {% if form.picture.errors %}
+                        <div class="invalid-feedback">
+                            <ul>
+                                {% for error in  form.picture.errors %}
+                                    <li>{{error}}</li>
+                                {% endfor %}
+                            <ul>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Guardar</button>
