@@ -7,6 +7,7 @@ from django.urls.base import reverse_lazy
 from django.views.generic import DetailView, FormView
 from .form import SignupForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import views as auth_views_django
 # Create your views here.
 
 
@@ -74,3 +75,9 @@ class SignuoAppView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+class LoginView(auth_views_django.LoginView):
+    template_name = 'users/login.html'
+
+class LogoutView(auth_views_django.LogoutView):
+    template_name = "users/logged_out.html"
