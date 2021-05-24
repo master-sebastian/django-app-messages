@@ -1,11 +1,13 @@
 from basic_project.form import ProfileForm
 from .form import MessageForm
 from django.contrib.auth.decorators import login_required
-from .models import Message
+from .models import Message, Profile
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.core import serializers
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.views.generic import  ListView, CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 import json
 
 LIST_MESSAGES = [
@@ -111,6 +113,25 @@ def updateProfile(request):
                 "form": form
     })
 
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
+
+    template_name = "manager_messages/profiles/update.html"
+    model = Profile
+    fields = ["first_name", "last_name", "bibliography", "picture"]
+
+    def get_object(self):
+        return self.request.user.profile
+    
+    def get_success_url(self):
+        username = self.object.user.username
+        self.request.user.first_name = self.object.first_name
+        self.request.user.last_name = self.object.last_name
+        self.request.user.save()
+        return reverse('users:detail', kwargs={
+            "slug_username": username
+        })
+
+
 @login_required
 def createMessage(request):
     if request.method == "POST":
@@ -125,9 +146,27 @@ def createMessage(request):
                 "profile":request.user.profile
     })
 
+class CreateMessageView(LoginRequiredMixin, CreateView):
+    template_name = "manager_messages/messages/create.html"
+    form_class = MessageForm
+    success_url = reverse_lazy('manager_messages:index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["profile"] = self.request.user.profile
+        return context
+
 @login_required
 def listMessagesV2(request):
     listMessages = Message.objects.all().order_by("-created")#ordenar por mas recientes
     return render(request, 'manager_messages/messages/index.html',{
             "listMessages": listMessages
         })
+
+
+class MessagesFeedView(LoginRequiredMixin, ListView):
+    template_name = "manager_messages/messages/list_index.html"
+    model = Message
+    ordering = ('-created',)
+    paginate_by = 4
+    context_object_name = 'messages'

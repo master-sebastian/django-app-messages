@@ -1,11 +1,14 @@
+from typing import FrozenSet
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
-from django.views.generic import DetailView
+from django.urls.base import reverse_lazy
+from django.views.generic import DetailView, FormView
 from .form import SignupForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
+
 
 class UserDetailView(LoginRequiredMixin,DetailView):
     template_name = "users/detail.html"
@@ -62,3 +65,12 @@ def signupApp(request):
     elif request.method == "GET":
         return render(request, baseTemplate, context={"form":form})
     return HttpResponse("", stauts=404)
+
+class SignuoAppView(FormView):
+    template_name = "users/signup.html"
+    form_class = SignupForm
+    success_url = reverse_lazy("users:login")
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)

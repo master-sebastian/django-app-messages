@@ -1,0 +1,19 @@
+<div class="conteiner text-center">
+    <hr>
+    <nav aria-label="page navigation">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="{% if get_params %}?{{ get_params }}&{% else %}?{% endif %}page={{ page_obj.previous_page_number }}">Anterior</a></li>
+            {% else%}
+                <li class="page-item disabled"><a class="page-link" href="javascript:void(0)">Anterior</a></li>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="{% if get_params %}?{{ get_params }}&{% else %}?{% endif %}page={{ page_obj.next_page_number }}">Sigiente</a></li>
+            {% else%}
+                <li class="page-item disabled"><a class="page-link" href="javascript:void(0)">Sigiente</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <hr>
+    {{ page_obj.number }} de {{ page_obj.paginator.num_pages}}
+</div>

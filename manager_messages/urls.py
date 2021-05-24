@@ -12,6 +12,11 @@ urlpatterns = [
         views.listMessagesV2, 
         name="index"
     ),
+       path(
+        "list", 
+        views.MessagesFeedView.as_view(), 
+        name="list"
+    ),
     path(
         "profile/edit", 
         views.updateProfile, 
